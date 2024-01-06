@@ -33,7 +33,7 @@ const titleStep = new Composer()
 titleStep.on("text", async (ctx) => {
     try {
         ctx.wizard.state.data.title = ctx.message.text
-        await ctx.replyWithHTML(`<b>Отлично! Теперь напиши через сколько часов, минут и секунд вы хотите создать напоминание\nПример:\n1:12:30</b>`)
+        await ctx.replyWithHTML(`<b>Отлично! Теперь напиши через сколько часов, минут и секунд ты хочешь создать напоминание\nПример:\n1:12:30</b>`)
         return ctx.wizard.next()
     } catch (e) {
         console.log(e)

@@ -25,7 +25,7 @@ const titleStep = new Composer()
 titleStep.on("text", async (ctx) => {
     try {
         ctx.wizard.state.data.title = ctx.message.text
-        await ctx.replyWithHTML(`<b>Отлично! Теперь напиши когда вы хотите увидеть напоминание\nПример:\n05.01.2024 13:50</b>`)
+        await ctx.replyWithHTML(`<b>Отлично! Теперь напиши когда ты хочешь увидеть напоминание\nПример:\n05.01.2024 13:50</b>`)
         return ctx.wizard.next()
     } catch (e) {
         console.log(e)
@@ -59,7 +59,7 @@ cityStep.on("text", async (ctx) => {
                 ctx.reply('🔔')
                 ctx.replyWithHTML(`<b>Вот твоя заметка:</b>\n <blockquote>${ctx.wizard.state.data.title}</blockquote>`);
             }, time2);
-            ctx.replyWithHTML(`<b>Заметка успешно добавлена! Я напомню вам ${ctx.wizard.state.data.time}.</b>`);
+            ctx.replyWithHTML(`<b>Заметка успешно добавлена! Я напомню тебе ${ctx.wizard.state.data.time}.</b>`);
         } else {
             ctx.replyWithHTML('<b>Введённый формат времени неправильный!</b>', Markup.keyboard(
                 [
