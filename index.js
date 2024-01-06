@@ -160,7 +160,6 @@ bot.on('text', (ctx) => {
     }
 });
 
-
 bot.launch()
 
 // Enable graceful stop
