@@ -68,12 +68,12 @@ cityStep.on("text", async (ctx) => {
             }
         } catch (e) {
             console.log(e)
-            ctx.reply('Введённый формат времени неправильный.');
+            ctx.replyWithHTML('<b>Введённый формат времени неправильный.</b>');
         }
         return ctx.scene.leave()
     } catch (e) {
         console.log(e)
-        ctx.reply('Произошла ошибка при добавлении заметки.');
+        ctx.replyWithHTML('<b>Произошла ошибка при добавлении заметки.</b>');
     }
 })
 

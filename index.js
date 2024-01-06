@@ -156,7 +156,7 @@ bot.on('text', (ctx) => {
     const userMessage = ctx.message.text
     // Проверяем, есть ли сообщение пользователя в массиве фраз
     if (!phrases.includes(userMessage)) {
-        ctx.replyWithHTML('<b>Я вас не понимаю😥</b>');
+        ctx.replyWithHTML('<b>Я тебя не понимаю😥</b>');
     }
 });
 
