@@ -36,7 +36,7 @@ const cityStep = new Composer()
 cityStep.on("text", async (ctx) => {
     ctx.wizard.state.data.time = ctx.message.text.toString()
     try {
-        // Разбиваем время на день, месяц, год, часы и минуты
+        // Разбиваем время на день, месяц, год, часы, минуты и пояс, чтобы составить строку time3
         const [date, time, poyas] = ctx.wizard.state.data.time.split(" ");
         const [day, month, year] = date.split(".");
         const [hours, minutes] = time.split(":");
@@ -53,10 +53,21 @@ cityStep.on("text", async (ctx) => {
                 time: ctx.wizard.state.data.time
             });
             await record.save();
-            setTimeout(() => {
-                ctx.reply('🔔')
-                ctx.replyWithHTML(`<b>Вот твоя заметка:</b>\n <blockquote>${ctx.wizard.state.data.title}</blockquote>`);
-            }, secondsDiff);
+            const maxIntValue = 2147483647;
+            function startTimer(time) { //функция таймера с перезапуском, если значение миллисекунд больше, чем 2147483647
+                if (time <= maxIntValue) {
+                    setTimeout(() => {
+                        ctx.reply('🔔')
+                        ctx.replyWithHTML(`<b>Вот твоя заметка:</b>\n <blockquote>${ctx.wizard.state.data.title}</blockquote>`);
+                    }, time);
+                } else {
+                    setTimeout(() => {
+                        startTimer(time - maxIntValue);
+                    }, maxIntValue);
+                }
+            }
+            // Запускаем таймер
+            startTimer(secondsDiff);
             ctx.replyWithHTML(`<b>Заметка успешно добавлена! Я напомню тебе ${ctx.wizard.state.data.time}</b>`);
         } else {
             ctx.replyWithHTML('<b>Введённый формат времени неправильный!</b>', Markup.keyboard(

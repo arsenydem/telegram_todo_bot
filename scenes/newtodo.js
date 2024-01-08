@@ -54,10 +54,21 @@ cityStep.on("text", async (ctx) => {
                 });
                 await record.save();
                 const time = (parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds)) * 1000;
-                setTimeout(() => {
-                    ctx.reply('🔔')
-                    ctx.replyWithHTML(`<b>Вот твоя заметка:</b>\n <blockquote>${ctx.wizard.state.data.title}</blockquote>`);
-                }, time);
+                const maxIntValue = 2147483647;
+                function startTimer(time) { //функция таймера с перезапуском, если значение миллисекунд больше, чем 2147483647
+                    if (time <= maxIntValue) {
+                        setTimeout(() => {
+                            ctx.reply('🔔')
+                            ctx.replyWithHTML(`<b>Вот твоя заметка:</b>\n <blockquote>${ctx.wizard.state.data.title}</blockquote>`);
+                        }, time);
+                    } else {
+                        setTimeout(() => {
+                            startTimer(time - maxIntValue);
+                        }, maxIntValue);
+                    }
+                }
+                // Запускаем таймер
+                startTimer(time);
                 ctx.replyWithHTML(`<b>Заметка успешно добавлена!. Я напомню о ней через ${hours} часов, ${minutes} минут, ${seconds} секунд.</b>`);
             } else {
                 ctx.replyWithHTML('Введённый формат времени неправильный.', Markup.keyboard(
